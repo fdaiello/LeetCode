@@ -1,15 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
 namespace LeetCode
 {
+  public class ListNode
+    {
+      public int val;
+      public ListNode next;
+      public ListNode(int val = 0, ListNode next = null)
+      {
+            this.val = val;
+            this.next = next;
+      }
+  }
     class Program
     {
         static void Main(string[] args)
         {
             TestMinWindow();
         }
+        public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+        {
+            BigInteger sum1 = 0;
+            BigInteger sum2 = 0;
+            BigInteger mult = 1;
+
+            while (l1 != null)
+            {
+                sum1 += l1.val * mult;
+                mult = mult * 10;
+                l1 = l1.next;
+            }
+
+            mult = 1;
+
+            while (l2 != null)
+            {
+                sum2 += l2.val * mult;
+                mult = mult * 10;
+                l2 = l2.next;
+            }
+
+            BigInteger sumt = sum1 + sum2;
+            string sumS = sumt.ToString();
+
+            ListNode head = new ListNode(Int32.Parse(sumS.Substring(sumS.Length - 1, 1)));
+            ListNode p = head;
+
+            for (int i = 1; i < sumS.Length; i++)
+            {
+                p.next = new ListNode(Int32.Parse(sumS.Substring(sumS.Length - 1 - i, 1)));
+                p = p.next;
+            }
+
+            return head;
+        }
+
         // Bug
         public static string MinWindow(string s, string t)
         {
